@@ -1,25 +1,27 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { connect } from "react-redux";
+import { signIn, signOut } from "./actions";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends React.Component {
+  signInClick = () => {
+    this.props.signIn();
+  };
+  signOutClick = () => {
+    this.props.signOut();
+  };
+  render() {
+    return (
+      <>
+        <h3>Press the Buttons Below To Sign In or Sign Out</h3>
+        <button onClick={this.signInClick}>Sign In</button>
+        <button onClick={this.signOutClick}>Sign Out</button>
+        <h3>Are you signed in?: {this.props.isSignedIn}</h3>
+      </>
+    );
+  }
 }
+const mapStateToProps = (state) => {
+  return { isSignedIn: state.isSignedIn };
+};
 
-export default App;
+export default connect(mapStateToProps, { signIn, signOut })(App);
